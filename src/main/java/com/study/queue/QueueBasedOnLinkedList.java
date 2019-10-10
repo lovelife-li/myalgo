@@ -1,4 +1,4 @@
-package com.teach.queue;
+package com.study.queue;
 
 /**
  * 基于链表实现的队列

@@ -83,69 +83,71 @@ public class Practice02 {
 
     // 检测环
     public static boolean checkCircle(Node list) {
-        if (list == null) return false;
-
-        Node fast = list.next;
-        Node slow = list;
-
-        while (fast != null && fast.next != null) {
-            fast = fast.next.next;
-            slow = slow.next;
-
-            if (slow == fast) return true;
+        if (list == null) {
+            return false;
         }
-
+        Node p = list;
+        Node q = list;
+        while (p.next != null && p.next.next != null) {
+            p = p.next.next;
+            q = q.next;
+            if (p == q) {
+                return true;
+            }
+        }
         return false;
     }
 
 
     // 删除倒数第K个结点
     public static Node deleteLastKth(Node list, int k) {
+
         Node fast = list;
+        Node slow = list;
+        Node prev = null;
         int i = 1;
         while (fast != null && i < k) {
             fast = fast.next;
             ++i;
         }
-
-        if (fast == null) return list;
-
-        Node slow = list;
-        Node prev = null;
+        if (fast == null) {
+            return list;
+        }
         while (fast.next != null) {
             fast = fast.next;
             prev = slow;
             slow = slow.next;
         }
-
         if (prev == null) {
-            list = list.next;
+            return list.next;
         } else {
             prev.next = prev.next.next;
         }
+
         return list;
+
     }
 
     // 有序链表合并
     public static Node mergeTwoLists(Node l1, Node l2) {
-        Node soldier = new Node(0); //利用哨兵结点简化实现难度
-        Node p = soldier;
-
-        while ( l1 != null && l2 != null ){
-            if ( l1.value < l2.value ){
-                p.next = l1;
+        Node head = new Node(null, 0);
+        Node tmp = head;
+        while (l1 != null && l2 != null) {
+            if (l1.value > l2.value) {
+                tmp.next = l2;
+                l2 = l2.next;
+            } else {
+                tmp.next = l1;
                 l1 = l1.next;
             }
-            else{
-                p.next = l2;
-                l2 = l2.next;
-            }
-            p = p.next;
-        }
+            tmp = tmp.next;
 
-        if (l1 != null) { p.next = l1; }
-        if (l2 != null) { p.next = l2; }
-        return soldier.next;
+        }
+        if (l1 != null) tmp.next = l1;
+        if (l2 != null) tmp.next = l2;
+
+        return head.next;
+
     }
 
     // 求链表的中间结点
@@ -170,11 +172,12 @@ public class Practice02 {
         Node head2 = createLinkedList(new int[]{1, 2});
         Node head3 = createLinkedList(new int[]{1, 2, 3});
         Node head4 = createLinkedList(new int[]{1, 2, 3, 4});
-        Node head5 = createLinkedList(new int[]{1, 2, 3, 4, 5});
-        print(deleteLastKth(head1,1));
-        print(deleteLastKth(head2,1));
-        print(deleteLastKth(head3,1));
-        print(deleteLastKth(head4,3 ));
-        print(mergeTwoLists(head5,head4 ));
+        Node head5 = createLinkedList2(new int[]{1, 2, 3, 4, 5});
+        print(deleteLastKth(head1, 2));
+        print(deleteLastKth(head2, 2));
+        print(deleteLastKth(head3, 2));
+        System.out.println(checkCircle(head5));
+        System.out.println("--------------");
+        print(mergeTwoLists(head4, head3));
     }
 }

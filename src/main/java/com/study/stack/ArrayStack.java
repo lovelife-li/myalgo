@@ -1,6 +1,9 @@
 package com.study.stack;
 
-//  基于数组实现的顺序栈
+
+/**
+ * 基于数组实现的顺序栈
+  */
 public class ArrayStack {
     private String[] items; //  数组
     private int count; //  栈中元素个数

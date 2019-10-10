@@ -1,4 +1,4 @@
-package com.teach.stack;
+package com.study.stack;
 
 /**
  * 使用前后栈实现浏览器的前进后退。
