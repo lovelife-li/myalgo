@@ -1,7 +1,8 @@
 package com.study.linkedlist;
 
-import lombok.Data;
-
+/**
+ * 约瑟夫问题
+ */
 public class Josephs {
     static class Node {
         Node next;

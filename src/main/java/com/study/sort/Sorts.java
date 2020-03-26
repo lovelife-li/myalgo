@@ -3,7 +3,7 @@ package com.study.sort;
 import java.util.Arrays;
 
 /**
- * 冒泡，选择，插入
+ * 冒泡，选择，插入，快速，归并
  *
  * @author ldb
  * @date 2019-10-08 16:09
@@ -67,7 +67,7 @@ public class Sorts {
     }
 
     /**
-     * 插入排序,指定数据范围
+     * 插入排序
      *
      * @param arr
      * @param n   表示数组有用大小
@@ -219,7 +219,6 @@ public class Sorts {
         int val = arr[right];
         arr[right] = pivot;
         arr[middle] = val;
-
         int i = left;
         for (int j = left; j < right; j++) {
             if (arr[j] < pivot) {
@@ -378,9 +377,9 @@ public class Sorts {
 //        bubbleSort2(arr);
 //        selectSort(arr);
 //        mergeSort(arr, 0, arr.length - 1);
-        quickSort4(arr, 0, arr.length - 1);
+//        quickSort4(arr, 0, arr.length - 1);
 
-//        Arrays.sort(arr);
+        Arrays.sort(arr);
         print(arr);
 
     }
