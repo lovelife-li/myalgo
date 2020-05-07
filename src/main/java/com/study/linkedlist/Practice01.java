@@ -3,7 +3,8 @@ package com.study.linkedlist;
 import lombok.Data;
 
 /**
- * 约瑟夫问题是个有名的问题：N个人围成一圈，从第一个开始报数，第M个将被杀掉，最后剩下一个，其余人都将被杀掉。例如N=6，M=5，被杀掉的顺序是：5，4，6，2，3，1。
+ * 约瑟夫问题是个有名的问题：N个人围成一圈，从第一个开始报数，第M个将被杀掉，最后剩下一个，其余人都将被杀掉。
+ * 例如N=6，M=5，被杀掉的顺序是：5，4，6，2，3，1。
  *
  * @author ldb
  * @date 2019-09-29 10:51
@@ -58,7 +59,7 @@ public class Practice01 {
         if (n == 1) {
             return 0;
         } else {
-            return (alive2(n - 1,m) + m) % n;
+            return (alive2(n - 1, m) + m) % n;
         }
 
     }
@@ -76,9 +77,13 @@ public class Practice01 {
     }
 
     public static void main(String[] args) {
-        System.out.println(alive(createList(6), 5));
-        System.out.println(alive3(6,5));
-        System.out.println(alive2(6,5)+1);
+        System.out.println(alive(createList(6), 5)); // 1
+        System.out.println(alive(createList(7), 1)); // 7
+        System.out.println(alive(createList(10), 3));// 4
+        System.out.println(alive(createList(100), 5));// 47
+
+        System.out.println(alive3(6, 5));
+        System.out.println(alive2(6, 5) + 1);
 
     }
 }
