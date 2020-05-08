@@ -31,7 +31,7 @@ public class Array {
 
     // 插入元素:头部插入，尾部插入
     public boolean insert(int index, int value) {
-        if (index < 0 && index > count) {
+        if (index < 0 || index > count) {
             System.out.println("插入位置不合法");
             return false;
         }
@@ -56,11 +56,11 @@ public class Array {
 
     // 根据索引，删除数组中元素
     public boolean delete(int index) {
-        if (index < 0 && index >= count) {
+        if (index < 0 || index >= count) {
             return false;
         }
 
-        for (int i = index + 1; i < count; i++) {
+        for (int i = index + 1; i <= count; i++) {
             data[i - 1] = data[i];
         }
         --count;
@@ -79,22 +79,14 @@ public class Array {
 
     public static void main(String[] args) {
         Array array = new Array(5);
-        array.printAll();
-        array.insert(0, 3);
-        array.insert(0, 4);
-        array.insert(1, 5);
-        array.insert(3, 9);
-        array.insert(3, 10);
-        //array.insert(3, 11);
-        array.printAll();
-        System.out.println("---------");
-        array.delete(4);
+        array.insert(0,1);
+        array.insert(1,2);
+        array.insert(2,3);
 
-        for (int datum : array.data) {
-            System.out.print(datum + " ");
-        }
+//        array.delete(2);
+        array.printAll();
 
-        System.out.println();
+        array.insert(3,4);
         array.printAll();
     }
 

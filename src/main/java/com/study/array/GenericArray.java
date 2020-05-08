@@ -93,7 +93,7 @@ public class GenericArray<T> {
         checkIndexForRemove(index);
 
         T ret = data[index];
-        for (int i = index + 1; i < size; i++) {
+        for (int i = index + 1; i <= size; i++) {
             data[i - 1] = data[i];
         }
         size --;
@@ -161,5 +161,24 @@ public class GenericArray<T> {
         if(index < 0 || index >= size) {
             throw new IllegalArgumentException("remove failed! Require index >=0 and index < size.");
         }
+    }
+
+    public static void main(String[] args) {
+        GenericArray<Integer> list = new GenericArray<>();
+        list.add(0,1);
+        list.set(0,3);
+        System.out.println(list.toString());
+        list.add(1,1);
+        list.add(2,2);
+        list.add(3,3);
+        list.add(4,4);
+        list.add(5,5);
+        list.add(6,6);
+        list.add(7,7);
+        list.add(8,8);
+        list.add(9,9);
+        list.add(10,10);
+        list.remove(5);
+        System.out.println(list.toString());
     }
 }

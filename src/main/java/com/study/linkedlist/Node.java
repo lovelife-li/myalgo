@@ -13,4 +13,12 @@ public class Node {
     public Node(int val) {
         this.val = val;
     }
+
+    public void print(Node node) {
+        Node head = node;
+        while (head != null) {
+            System.out.print(head.val + " ");
+            head = head.next;
+        }
+    }
 }
