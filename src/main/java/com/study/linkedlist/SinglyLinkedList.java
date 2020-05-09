@@ -254,18 +254,19 @@ public class SinglyLinkedList {
     public static void main(String[] args) {
 
         SinglyLinkedList link = new SinglyLinkedList();
-        int data[] = {1};
+//        int data[] = {1};
         //int data[] = {1,2};
         //int data[] = {1,2,3,1};
         //int data[] = {1,2,5};
         //int data[] = {1, 2, 2, 1};
         //int data[] = {1,2,5,2,1};
-        //int data[] = {1, 2, 3, 4, 5, 6};
+        int data[] = {1, 2, 3, 4, 5, 6};
 
         for (int i = 0; i < data.length; i++) {
             //link.insertToHead(data[i]);
             link.insertTail(data[i]);
         }
+        link.insertBefore(link.head,new Node(7,null));
         System.out.println("打印原始:");
         link.printAll(link.head);
 
