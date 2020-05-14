@@ -186,7 +186,7 @@ public class Sorts {
         if (left >= right) {
             return;
         }
-        int q = partition2(arr, left, right);
+        int q = partition(arr, left, right);
         quickSort(arr, left, q - 1);
         quickSort(arr, q + 1, right);
     }
@@ -284,8 +284,8 @@ public class Sorts {
             }
         }
 
-        quickSort(arr, left, l - 1);
-        quickSort(arr, r + 1, right);
+        quickSort3(arr, left, l - 1);
+        quickSort3(arr, r + 1, right);
     }
 
     /**
@@ -347,9 +347,9 @@ public class Sorts {
         arr[right] = arr[r];
         arr[r] = pivot2;
 
-        quickSort(arr, left, l - 1);
-        quickSort(arr, l + 1, r - 1);
-        quickSort(arr, r + 1, right);
+        quickSort4(arr, left, l - 1);
+        quickSort4(arr, l + 1, r - 1);
+        quickSort4(arr, r + 1, right);
     }
 
     /**
@@ -372,12 +372,12 @@ public class Sorts {
     }
 
     public static void main(String[] args) {
-        int[] arr = {2, 1, 5, 6, 8, 4, 12, 11, 13, 15, 7, 9, 0, -1};
+        int[] arr = {12, 2, 1, 5, 6, 8, 4, 7, -1, 3, 13, 5};
 //        bubbleSort(arr);
 //        bubbleSort2(arr);
 //        selectSort(arr);
 //        mergeSort(arr, 0, arr.length - 1);
-//        quickSort4(arr, 0, arr.length - 1);
+        quickSort4(arr, 0, arr.length - 1);
 
         Arrays.sort(arr);
         print(arr);
