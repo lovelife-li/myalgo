@@ -1,5 +1,7 @@
 package com.study.suanfa;
 
+import java.util.Arrays;
+
 /**
  * @author ldb
  * @date 2019-10-28 13:53
@@ -62,7 +64,7 @@ public class StringPattern {
                 return -1;
             }
             // a[i] 和 a[i-1] 关系
-            suba = (suba - tab[m - 1] * (a[i - 1] - 'a')) * 26 + tab[0] * (a[i + m - 1] - 'a');
+            suba = suba - tab[m - 1] * (a[i - 1] - 'a') * 26 + tab[0] * (a[i + m - 1] - 'a');
             if (suba != hashb) {
                 continue;
             }
@@ -223,7 +225,9 @@ public class StringPattern {
 //        int[] suffix = new int[b.length()];
 //        boolean[] prefix = new boolean[b.length()];
 //        pattern.generateGS(b.toCharArray(), b.length(), suffix, prefix);
-        int bm = pattern.kmp(a.toCharArray(), a.length(), b.toCharArray(), b.length());
-        System.out.println(bm);
+//        int bm = pattern.kmp(a.toCharArray(), a.length(), b.toCharArray(), b.length());
+//        System.out.println(bm);
+
+        System.out.println(Arrays.toString(pattern.getNexts(b.toCharArray(),b.length())));
     }
 }

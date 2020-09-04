@@ -34,18 +34,15 @@ public class LRULinkedHashMap<K, V> extends LinkedHashMap<K, V> {
     }
 
     public static void main(String[] args) {
-        LRULinkedHashMap<String, Integer> lru = new LRULinkedHashMap<>(8);
+        LRULinkedHashMap<String, Integer> lru = new LRULinkedHashMap<>(4);
         lru.put("d",4);
         lru.put("a",1);
         lru.put("b",2);
         lru.put("c",3);
         lru.put("e",5);
         lru.put("f",6);
-        lru.put("g",7);
-        lru.put("h",8);
-        lru.put("j",9);
-        lru.put("h",8);
-
+        // 2->3->5->6->null
+        // 队列尾部就是缓存头部（频繁访问的部分）
         for (Map.Entry<String, Integer> entry : lru.entrySet()) {
             System.out.println(entry.getKey() + "->" + entry.getValue());
         }

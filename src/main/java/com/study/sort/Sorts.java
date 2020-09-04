@@ -378,7 +378,7 @@ public class Sorts {
     }
 
     public static void main(String[] args) {
-        int[] arr = {12, 2, 1, 5, 6, 8, 4, 7, -1, 3, 13, 5};
+        int[] arr = {12, 1, 5, 6, 8, 4, 7, -1, 3, 13, 9, 8, 12, 10, 4};
 //        bubbleSort(arr);
 //        bubbleSort2(arr);
 //        selectSort(arr);

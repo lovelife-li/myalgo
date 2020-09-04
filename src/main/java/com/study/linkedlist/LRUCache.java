@@ -86,6 +86,7 @@ public class LRUCache<K, V> {
         }
     }
 
+    // 移到缓存头部
     public void moveNodeToTail(Node node) {
         if (tail == node) {
             return;
@@ -104,6 +105,7 @@ public class LRUCache<K, V> {
         tail = node;
     }
 
+    // 缓存尾部删除
     public Node removeHead() {
         if (head == null) {
             return null;

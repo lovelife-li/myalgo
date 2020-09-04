@@ -85,7 +85,7 @@ public class Heap {
      * @param n 堆中元数个数
      */
     private static void buildHeap(int[] a, int n) {
-        for (int i = n / 2; i > 0; i--) {
+        for (int i = n / 2; i >= 1; i--) {
             heapify(a, n, i);
         }
     }

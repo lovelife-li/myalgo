@@ -35,7 +35,7 @@ public class Lesson3_2 {
 
     public static void main(String[] args) {
 
-        int number = 10;
+        int number = 8;
         double squareRoot = Lesson3_2.getSqureRoot(number, 0.000001, 10000);
         if (squareRoot == -1.0) {
             System.out.println("请输入大于1的整数");

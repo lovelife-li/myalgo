@@ -2,100 +2,108 @@ package com.study.advanced;
 
 import java.util.LinkedList;
 
+/**
+ * 拓扑排序算法
+ * 要求：有向无环图
+ * 可以检测环是否存在
+ *
+ * @author ldb
+ * @date 2020/09/03
+ */
 public class Graph {
-    private int v; // 顶点的个数
-    private LinkedList<Integer> adj[]; // 邻接表
+    private int v;
+    private LinkedList<Integer>[] adj;
 
     public Graph(int v) {
         this.v = v;
-        adj = new LinkedList[v];
-        for (int i = 0; i < v; ++i) {
+        this.adj = new LinkedList[v];
+        for (int i = 0; i < v; i++) {
             adj[i] = new LinkedList<>();
         }
+
     }
 
-    public void addEdge(int s, int t) { // s 先于 t，边 s->t
-        adj[s].add(t);
+    public void addEdge(int i, int j) {
+        adj[i].add(j);
     }
 
-    /**
-     * Kahn 算法实际上用的是贪心算法思想，思路非常简单、好懂。
-     * Kahn 算法的时间复杂度就是 O(V+E)（V 表示顶点个数，E 表示边的个数）。
-     */
-    public void topoSortByKahn() {
-        int[] inDegree = new int[v]; // 统计每个顶点的入度
-        for (int i = 0; i < v; ++i) {
-            for (int j = 0; j < adj[i].size(); ++j) {
-                int w = adj[i].get(j); // i->w
-                inDegree[w]++;
+    public void addData() {
+        // 1->2->3->6
+        // 0->2->4->7
+        addEdge(0, 2);
+        addEdge(1, 2);
+        addEdge(2, 3);
+        addEdge(3, 5);
+        addEdge(2, 4);
+        addEdge(4, 6);
+    }
+
+    public void sortKahn() {
+        // 1 统计所有顶点的入度
+        int[] degrees = new int[v];
+        for (int i = 0; i < v; i++) {
+            for (Integer j : adj[i]) {
+                degrees[j]++;
             }
         }
+        // 2 广度遍历,从入度为0开始,使邻接表节点点减一，再把入度为0的节点加入
         LinkedList<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < v; ++i) {
-            if (inDegree[i] == 0) {
+        // 加入顶点到queue
+        for (int i = 0; i < degrees.length; i++) {
+            if (degrees[i] == 0) {
                 queue.add(i);
             }
         }
         while (!queue.isEmpty()) {
-            int i = queue.remove();
-            System.out.print("->" + i);
-            for (int j = 0; j < adj[i].size(); ++j) {
-                int k = adj[i].get(j);
-                inDegree[k]--;
-                if (inDegree[k] == 0) {
-                    queue.add(k);
+            int q = queue.poll();
+            System.out.print(q + "->");
+            for (Integer p : adj[q]) {
+                degrees[p]--;
+                if (degrees[p] == 0) {
+                    queue.add(p);
                 }
             }
+
         }
+    }
+
+    public void sortDfs() {
+        // 1,构建逆邻接表
+        LinkedList<Integer>[] reverseAdj = new LinkedList[v];
+        for (int i = 0; i < v; i++) {
+            reverseAdj[i] = new LinkedList<>();
+        }
+        for (int i = 0; i < v; i++) {
+            for (Integer j : adj[i]) {
+                reverseAdj[j].add(i);
+            }
+        }
+        // 2,递归逆邻接，直到没有逆邻接表，输出该节点
+        boolean[] visited = new boolean[v];
+        for (int i = 0; i < v; i++) {
+            if (!visited[i]) {
+                visited[i] = true;
+                dfs(reverseAdj, visited, i);
+            }
+        }
+
+    }
+
+    private void dfs(LinkedList<Integer>[] reverseAdj, boolean[] visited, int i) {
+        for (Integer k : reverseAdj[i]) {
+            if (!visited[k]) {
+                visited[k] = true;
+                dfs(reverseAdj, visited, k);
+            }
+        }
+        System.out.print(i + "->");
     }
 
     public static void main(String[] args) {
-        Graph graph = new Graph(6);
-        graph.addEdge(0,1);
-        graph.addEdge(0,2);
-        graph.addEdge(2,4);
-        graph.addEdge(3,1);
-        graph.addEdge(5,2);
-        graph.addEdge(4,5);
-
-        graph.topoSortByKahn();
+        Graph graph = new Graph(7);
+        graph.addData();
+        graph.sortKahn();
         System.out.println();
-        graph.topoSortByDFS();
-    }
-
-    /**
-     * 深度优先遍历DFS 算法
-     */
-    public void topoSortByDFS() {
-        // 先构建逆邻接表，边 s->t 表示，s 依赖于 t，t 先于 s
-        LinkedList<Integer> inverseAdj[] = new LinkedList[v];
-        for (int i = 0; i < v; ++i) { // 申请空间
-            inverseAdj[i] = new LinkedList<>();
-        }
-        for (int i = 0; i < v; ++i) { // 通过邻接表生成逆邻接表
-            for (int j = 0; j < adj[i].size(); ++j) {
-                int w = adj[i].get(j); // i->w
-                inverseAdj[w].add(i); // w->i
-            }
-        }
-        boolean[] visited = new boolean[v];
-        for (int i = 0; i < v; ++i) { // 深度优先遍历图
-            if (visited[i] == false) {
-                visited[i] = true;
-                dfs(i, inverseAdj, visited);
-            }
-        }
-    }
-
-    // 先把它依赖的所有的顶点输出了，然后再输出自己
-    private void dfs(
-            int vertex, LinkedList<Integer> inverseAdj[], boolean[] visited) {
-        for (int i = 0; i < inverseAdj[vertex].size(); ++i) {
-            int w = inverseAdj[vertex].get(i);
-            if (visited[w] == true) continue;
-            visited[w] = true;
-            dfs(w, inverseAdj, visited);
-        } // 先把 vertex 这个顶点可达的所有顶点都打印出来之后，再打印它自己
-        System.out.print("->" + vertex);
+        graph.sortDfs();
     }
 }

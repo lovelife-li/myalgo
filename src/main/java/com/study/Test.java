@@ -30,6 +30,9 @@ public class Test {
         System.out.println((1 << 31) - 1);
 
         System.out.println(test2(15));
+        int x = 4;
+        Integer a = (Integer) x;
+        System.out.println(a);
 
     }
 

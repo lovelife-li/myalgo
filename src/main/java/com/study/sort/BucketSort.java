@@ -87,8 +87,8 @@ public class BucketSort {
     public static void main(String[] args) {
         int arr[] = {22, 5, 11, 41, 45, 26, 29, 10, 7, 8, 8, 8, 8, 8, 8, 30, 27, 42, 43, 40};
 
-//        bucketSort(arr, 10,5);
-        Sorts.insertSort(arr,5);
+        bucketSort(arr, 10,5);
+//        Sorts.insertSort(arr,5);
         System.out.println(Arrays.toString(arr));
     }
 

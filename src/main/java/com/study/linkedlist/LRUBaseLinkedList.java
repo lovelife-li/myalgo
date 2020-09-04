@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 /**
  * 基于单链表LRU算法（java）
- *
+ * 不用看
  * @author hoda
  * @create 2018-12-17
  */

@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
+ *
  * @author ldb
  * @date 2019-10-23 15:10
  */
@@ -125,6 +126,7 @@ public class Graph {
         graph.addEdge(1, 2);
         graph.addEdge(1, 4);
         graph.addEdge(2, 5);
+        graph.addEdge(3, 4);
         graph.addEdge(4, 5);
         graph.addEdge(4, 6);
         graph.addEdge(5, 7);

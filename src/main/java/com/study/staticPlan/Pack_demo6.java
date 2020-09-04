@@ -1,7 +1,5 @@
 package com.study.staticPlan;
 
-import javax.swing.plaf.metal.MetalIconFactory;
-
 /**
  * 0-1 背包问题升级版,动态规划
  * 我们刚刚讲的背包问题,只涉及背包重量和物品重量。我们现在引入物品价值这一变量。对于一组不同重量、不同价值、不可分割的物品,
@@ -52,7 +50,7 @@ public class Pack_demo6 {
 
     public static void main(String[] args) {
         Pack_demo6 p = new Pack_demo6();
-        int[] items = {150,30,160,10,50,100};
+        int[] items = {150,30,160,10,50,100,20};
         int[] weight = {2, 2, 4, 6, 3};
 //        double11advance(weight, weight.length, 4);
         double11advance(items, items.length, 200);

@@ -50,10 +50,10 @@ public class Practice01 {
     }
 
     /**
-     * f(n)=(f(n-1)+q)%n
+     * f(n)=(f(n-1)+m)%n
      *
-     * @param n
-     * @param m
+     * @param n n个人
+     * @param m 数到m
      */
     public static int alive2(int n, int m) {
         if (n == 1) {
@@ -78,9 +78,9 @@ public class Practice01 {
 
     public static void main(String[] args) {
         System.out.println(alive(createList(6), 5)); // 1
-        System.out.println(alive(createList(7), 1)); // 7
-        System.out.println(alive(createList(10), 3));// 4
-        System.out.println(alive(createList(100), 5));// 47
+//        System.out.println(alive(createList(7), 1)); // 7
+//        System.out.println(alive(createList(10), 3));// 4
+//        System.out.println(alive(createList(100), 5));// 47
 
         System.out.println(alive3(6, 5));
         System.out.println(alive2(6, 5) + 1);

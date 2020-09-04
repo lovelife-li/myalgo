@@ -1,5 +1,8 @@
 package com.study.tree;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * 二叉搜索树
  */
@@ -20,6 +23,11 @@ public class BinarySearchTree {
         return null;
     }
 
+    /**
+     * 找到叶子节点，插入
+     *
+     * @param data
+     */
     public void insert(int data) {
         Node p = tree;
         if (p == null) {
@@ -73,39 +81,37 @@ public class BinarySearchTree {
         if (p == null) {
             return;
         }
-        if (pp == null) {
-            tree = null;
-        }
         Node child = null;
         //  要删除的节点有两个子节点,查找右子树中最小节点
         if (p.left != null && p.right != null) {
             Node minp = p.right;
             Node minpp = p;
+            // 找后继节点minp
             while (minp.left != null) {
                 minpp = minp;
                 minp = minp.left;
             }
             //  将 minP  的数据替换到 p  中
             p.data = minp.data;
-            //  下面就变成了删除 minP  了
-            if (minp.right != null) {
-                minpp.left = minp.right;
-            } else {
-                minpp.left = null;
-            }
+            pp = minpp;
+            p = minp;
 
-            return;
+        }
 
-        } else if (p.left != null) {
+        if (p.left != null) {
             //  删除节点是叶子节点或者仅有一个子节点
             child = p.left;
         } else if (p.right != null) {
             child = p.right;
         }
-        if (pp.left == p) {
-            pp.left = child;
+        if (pp == null) {
+            tree = child;
         } else {
-            pp.right = child;
+            if (pp.left == p) {
+                pp.left = child;
+            } else {
+                pp.right = child;
+            }
         }
 
 
@@ -144,6 +150,16 @@ public class BinarySearchTree {
         tree.insert(33);
         tree.insert(16);
         tree.insert(50);
+        tree.delete(33);
+
+        tree.print1(tree.tree);
+        //test1(tree);
+    }
+
+    private static void test1(BinarySearchTree tree) {
+        tree.insert(33);
+        tree.insert(16);
+        tree.insert(50);
         tree.insert(13);
         tree.insert(18);
         tree.insert(34);
@@ -160,17 +176,18 @@ public class BinarySearchTree {
         tree.delete(13);
         tree.delete(18);
         tree.delete(55);
-        tree.print1(tree.tree);
-        System.out.println();
-        tree.print2(tree.tree);
-        System.out.println();
-        tree.print3(tree.tree);
+//        tree.print1(tree.tree);
+//        System.out.println();
+//        tree.print2(tree.tree);
+//        System.out.println();
+//        tree.print3(tree.tree);
+
+        tree.printTree(tree.tree, new ArrayList<>());
         /**
          * 前序：33，16，13，15，18，17，25，19，27，50，34，58，51，55，66
          * 中序：13，15，16，17，18，19，25，27，33，34，50，51，55，58，66
          * 后序：15，13，17，19，27，25，18，16，34，55，51，66，58，50，33
-         */
-    }
+         */}
 
     /**
      * 前序遍历
@@ -182,6 +199,25 @@ public class BinarySearchTree {
             System.out.print(tree.data + " ");
             print1(tree.left);
             print1(tree.right);
+        }
+
+    }
+
+    /**
+     * 二叉树中打印从根到叶的所有路径
+     *
+     * @param node
+     * @param list
+     */
+    private void printTree(Node node, ArrayList<Integer> list) {
+        if (node != null) {
+            list.add((node.data));
+            if (node.left == null && node.right == null) {
+                System.out.println(list);
+                return;
+            }
+            printTree(node.left, (ArrayList<Integer>) list.clone());
+            printTree(node.right, (ArrayList<Integer>) list.clone());
         }
 
     }

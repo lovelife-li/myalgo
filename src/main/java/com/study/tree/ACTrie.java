@@ -1,5 +1,7 @@
 package com.study.tree;
 
+import lombok.ToString;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -47,6 +49,11 @@ public class ACTrie {
         public AcNode(char data) {
             this.data = data;
         }
+
+        @Override
+        public String toString() {
+            return data + "->" + fail;
+        }
     }
 
     public void buildFailurePointer() {
@@ -88,7 +95,10 @@ public class ACTrie {
                 p = p.fail; // 失败指针发挥作用的地方
             }
             p = p.children[idx];
-            if (p == null) p = root; // 如果没有匹配的，从 root 开始重新匹配
+            if (p == null){
+                p = root; // 如果没有匹配的，从 root 开始重新匹配
+                continue;
+            }
             AcNode tmp = p;
             while (tmp != root) { // 打印出可以匹配的模式串
                 if (tmp.isEndingChar == true) {
@@ -102,13 +112,13 @@ public class ACTrie {
 
     public static void main(String[] args) {
         ACTrie acTrie = new ACTrie();
-        acTrie.insert("abcd".toCharArray());
-        acTrie.insert("abe".toCharArray());
+        acTrie.insert("abce".toCharArray());
+        acTrie.insert("ce".toCharArray());
         acTrie.insert("bcd".toCharArray());
         acTrie.insert("c".toCharArray());
 
         acTrie.buildFailurePointer();
-        boolean b = acTrie.find("cd".toCharArray());
+        boolean b = acTrie.find("bc".toCharArray());
         System.out.println(b);
 
         acTrie.match("myabcdefg".toCharArray());

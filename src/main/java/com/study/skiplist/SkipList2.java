@@ -23,14 +23,14 @@ public class SkipList2 {
         Node p = head;
         // 从最大层开始查找，找到前一节点，通过--i，移动到下层再开始查找
         for (int i = levelCount - 1; i >= 0; --i) {
-            while (p.forwards[i] != null && p.forwards[i].data < value) {
+            while (p.next[i] != null && p.next[i].data < value) {
                 // 找到前一节点
-                p = p.forwards[i];
+                p = p.next[i];
             }
         }
 
-        if (p.forwards[0] != null && p.forwards[0].data == value) {
-            return p.forwards[0];
+        if (p.next[0] != null && p.next[0].data == value) {
+            return p.next[0];
         } else {
             return null;
         }
@@ -42,7 +42,7 @@ public class SkipList2 {
      * @param value 值
      */
     public void insert(int value) {
-        int level = head.forwards[0] == null ? 1 : randomLevel();
+        int level = head.next[0] == null ? 1 : randomLevel();
         // 每次只增加一层，如果条件满足
         if (level > levelCount) {
             level = ++levelCount;
@@ -57,19 +57,19 @@ public class SkipList2 {
         Node p = head;
         // 从最大层开始查找，找到前一节点，通过--i，移动到下层再开始查找
         for (int i = levelCount - 1; i >= 0; --i) {
-            while (p.forwards[i] != null && p.forwards[i].data < value) {
+            while (p.next[i] != null && p.next[i].data < value) {
                 // 找到前一节点
-                p = p.forwards[i];
+                p = p.next[i];
             }
-            // levelCount 会 > level，所以加上判断
+            // 随机level <  levelCount ，而只更新 0 到level-1 所以加上判断
             if (level > i) {
                 update[i] = p;
             }
 
         }
         for (int i = 0; i < level; ++i) {
-            newNode.forwards[i] = update[i].forwards[i];
-            update[i].forwards[i] = newNode;
+            newNode.next[i] = update[i].next[i];
+            update[i].next[i] = newNode;
         }
 
     }
@@ -80,7 +80,7 @@ public class SkipList2 {
      * @param value 值
      */
     public void insert2(int value) {
-        int level = head.forwards[0] == null ? 1 : randomLevel();
+        int level = head.next[0] == null ? 1 : randomLevel();
         // 每次只增加一层，如果条件满足
         if (level > levelCount) {
             level = ++levelCount;
@@ -90,18 +90,18 @@ public class SkipList2 {
         Node p = head;
         // 从最大层开始查找，找到前一节点，通过--i，移动到下层再开始查找
         for (int i = levelCount - 1; i >= 0; --i) {
-            while (p.forwards[i] != null && p.forwards[i].data < value) {
+            while (p.next[i] != null && p.next[i].data < value) {
                 // 找到前一节点
-                p = p.forwards[i];
+                p = p.next[i];
             }
-            // levelCount 会 > level，所以加上判断
+            // 随机level <  levelCount ，而只更新 0 到level-1 所以加上判断
             if (level > i) {
-                if (p.forwards[i] == null) {
-                    p.forwards[i] = newNode;
+                if (p.next[i] == null) {
+                    p.next[i] = newNode;
                 } else {
-                    Node next = p.forwards[i];
-                    p.forwards[i] = newNode;
-                    newNode.forwards[i] = next;
+                    Node next = p.next[i];
+                    p.next[i] = newNode;
+                    newNode.next[i] = next;
                 }
             }
 
@@ -113,7 +113,7 @@ public class SkipList2 {
      * 作者zheng的插入方法，未优化前，优化后参见上面insert()
      *
      * @param value
-     * @param level 0 表示随机层数，不为0，表示指定层数，指定层数
+     * @param level  表示数据所在层数。level=n ,表示数据在0到n-1层位置
      *              可以让每次打印结果不变动，这里是为了便于学习理解
      */
     public void insert(int value, int level) {
@@ -126,7 +126,8 @@ public class SkipList2 {
         newNode.data = value;
         // 表示从最大层到低层，都要有节点数据
         newNode.maxLevel = level;
-        // 记录要更新的层数，表示新节点要更新到哪几层
+        // 记录要更新的数据，表示新节点要更新到哪几层
+        // update[i] 表示第i层节点
         Node update[] = new Node[level];
         for (int i = 0; i < level; ++i) {
             update[i] = head;
@@ -140,8 +141,8 @@ public class SkipList2 {
          */
         Node p = head;
         for (int i = level - 1; i >= 0; --i) {
-            while (p.forwards[i] != null && p.forwards[i].data < value) {
-                p = p.forwards[i];
+            while (p.next[i] != null && p.next[i].data < value) {
+                p = p.next[i];
             }
             // 这里update[i]表示当前层节点的前一节点，因为要找到前一节点，才好插入数据
             update[i] = p;
@@ -150,9 +151,9 @@ public class SkipList2 {
         // 将每一层节点和后面节点关联
         for (int i = 0; i < level; ++i) {
             // 记录当前层节点后面节点指针
-            newNode.forwards[i] = update[i].forwards[i];
+            newNode.next[i] = update[i].next[i];
             // 前一个节点的指针，指向当前节点
-            update[i].forwards[i] = newNode;
+            update[i].next[i] = newNode;
         }
 
         // 更新层高
@@ -163,16 +164,16 @@ public class SkipList2 {
         Node[] update = new Node[levelCount];
         Node p = head;
         for (int i = levelCount - 1; i >= 0; --i) {
-            while (p.forwards[i] != null && p.forwards[i].data < value) {
-                p = p.forwards[i];
+            while (p.next[i] != null && p.next[i].data < value) {
+                p = p.next[i];
             }
             update[i] = p;
         }
 
-        if (p.forwards[0] != null && p.forwards[0].data == value) {
+        if (p.next[0] != null && p.next[0].data == value) {
             for (int i = levelCount - 1; i >= 0; --i) {
-                if (update[i].forwards[i] != null && update[i].forwards[i].data == value) {
-                    update[i].forwards[i] = update[i].forwards[i].forwards[i];
+                if (update[i].next[i] != null && update[i].next[i].data == value) {
+                    update[i].next[i] = update[i].next[i].next[i];
                 }
             }
         }
@@ -198,9 +199,9 @@ public class SkipList2 {
      */
     public void printAll() {
         Node p = head;
-        while (p.forwards[0] != null) {
-            System.out.print(p.forwards[0] + " ");
-            p = p.forwards[0];
+        while (p.next[0] != null) {
+            System.out.print(p.next[0] + " ");
+            p = p.next[0];
         }
         System.out.println();
     }
@@ -210,13 +211,13 @@ public class SkipList2 {
      */
     public void printAll_beautiful() {
         Node p = head;
-        Node[] c = p.forwards;
+        Node[] c = p.next;
         Node[] d = c;
         int maxLevel = c.length;
         for (int i = maxLevel - 1; i >= 0; i--) {
             do {
                 System.out.print((d[i] != null ? d[i].data : null) + ":" + i + "-------");
-            } while (d[i] != null && (d = d[i].forwards)[i] != null);
+            } while (d[i] != null && (d = d[i].next)[i] != null);
             System.out.println();
             d = c;
         }
@@ -229,17 +230,18 @@ public class SkipList2 {
         private int data = -1;
         /**
          * 表示当前节点位置的下一个节点所有层的数据，从上层切换到下层，就是数组下标-1，
-         * forwards[3]表示当前节点在第三层的下一个节点。
+         * next表示当前节点的下一个节点
          */
-        private Node forwards[];
+        private Node next[];
 
         /**
          * 这个值其实可以不用，看优化insert()
          */
         private int maxLevel = 0;
 
+        // level 是 forwards数组大小
         public Node(int level) {
-            forwards = new Node[level];
+            next = new Node[level];
         }
 
         @Override
