@@ -200,7 +200,6 @@ public class BinarySearchTree {
             print1(tree.left);
             print1(tree.right);
         }
-
     }
 
     /**

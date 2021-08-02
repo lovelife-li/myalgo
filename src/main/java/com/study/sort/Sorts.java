@@ -118,7 +118,6 @@ public class Sorts {
         mergeSort(arr, left, q);
         mergeSort(arr, q + 1, right);
         merge2(arr, left, q, right);
-
     }
 
     private static void merge2(int[] arr, int left, int q, int right) {

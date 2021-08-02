@@ -34,6 +34,8 @@ public class Test {
         Integer a = (Integer) x;
         System.out.println(a);
 
+
+
     }
 
     public static int test(int n) {
